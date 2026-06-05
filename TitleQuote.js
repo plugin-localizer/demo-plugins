@@ -1,14 +1,14 @@
 /*:
  * @target MZ
- * @plugindesc Displays a random quote on the title screen.
- * @author Plugin Localizer (demo)
- * @url https://github.com/plugin-localizer/catalog
+ * @plugindesc Displays a quote on the title screen.
+ * @author Plugin Finder (demo)
+ * @url https://github.com/plugin-finder/catalog
  *
- * @param quotes
- * @text Quotes
- * @desc Quotes to pick from at random.
- * @type string[]
- * @default ["Believe in yourself!","Adventure awaits."]
+ * @param quote
+ * @text Quote
+ * @desc The quote shown on the title screen.
+ * @type string
+ * @default Believe in yourself!
  *
  * @param y
  * @text Y Position
@@ -18,8 +18,9 @@
  *
  * @help TitleQuote.js
  *
- * A small demo plugin for the Plugin Localizer catalog. Each time the game
- * launches it shows one random quote on the title screen.
+ * A small demo plugin for the Plugin Finder catalog. It shows a quote on the
+ * title screen. Translate this plugin with Plugin Finder and both the quote and
+ * the descriptions will appear in your language.
  *
  * No plugin commands. RPG Maker MZ.
  *
@@ -33,15 +34,15 @@
 
 /*:ja
  * @target MZ
- * @plugindesc タイトル画面にランダムな一言を表示します。
- * @author Plugin Localizer（デモ）
- * @url https://github.com/plugin-localizer/catalog
+ * @plugindesc タイトル画面に一言を表示します。
+ * @author Plugin Finder（デモ）
+ * @url https://github.com/plugin-finder/catalog
  *
- * @param quotes
- * @text 一言リスト
- * @desc ランダムに選ばれる一言の一覧。
- * @type string[]
- * @default ["自分を信じて！","冒険が待っている。"]
+ * @param quote
+ * @text 一言
+ * @desc タイトル画面に表示する一言。
+ * @type string
+ * @default 自分を信じて！
  *
  * @param y
  * @text Y座標
@@ -51,8 +52,8 @@
  *
  * @help TitleQuote.js
  *
- * Plugin Localizer カタログのデモ用プラグインです。起動のたびにタイトル画面へ
- * ランダムな一言を1つ表示します。
+ * Plugin Finder カタログのデモ用プラグインです。タイトル画面に一言を表示します。
+ * Plugin Finder で翻訳すると、一言と説明文が自分の言語で表示されます。
  *
  * プラグインコマンドはありません。RPGツクールMZ用。
  *
@@ -67,16 +68,15 @@
   "use strict";
   const PLUGIN_NAME = "TitleQuote";
   const p = PluginManager.parameters(PLUGIN_NAME);
-  const quotes = JSON.parse(p.quotes || "[]");
+  const quote = String(p.quote || "");
   const y = Number(p.y || 540);
 
   const _create = Scene_Title.prototype.createForeground;
   Scene_Title.prototype.createForeground = function () {
     _create.call(this);
-    if (!quotes.length) return;
-    const text = quotes[Math.floor(Math.random() * quotes.length)];
+    if (!quote) return;
     const bmp = this._gameTitleSprite.bitmap;
     bmp.fontSize = 22;
-    bmp.drawText(text, 0, y, Graphics.width, 32, "center");
+    bmp.drawText(quote, 0, y, Graphics.width, 32, "center");
   };
 })();
